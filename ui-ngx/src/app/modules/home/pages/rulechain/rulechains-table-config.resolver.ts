@@ -127,7 +127,14 @@ export class RuleChainsTableConfigResolver implements Resolve<EntityTableConfig<
     const columns: Array<EntityColumn<RuleChain>> = [];
     columns.push(
       new DateEntityTableColumn<RuleChain>('createdTime', 'common.created-time', this.datePipe, '150px'),
-      new EntityTableColumn<RuleChain>('name', 'rulechain.name', '100%')
+      new EntityTableColumn<RuleChain>('name', 'rulechain.name', '30%'),
+      new EntityTableColumn<RuleChain>('description', 'rulechain.description', '70%',
+      entity => {
+        if (entity.additionalInfo !== null && 'description' in entity.additionalInfo){
+          return entity.additionalInfo.description;
+        }
+        return '';
+      })
     );
     if (ruleChainScope === 'tenant' || ruleChainScope === 'edge') {
       columns.push(
